@@ -1038,6 +1038,8 @@ bool LoadIPsFromHttp(const CService& addrConnect, const char* pszGet, CNetAddr *
     string strLine;
 
 	string seedIP;
+	bool foundSeeds = false;
+
     while (RecvLine(hSocket, strLine))
     {
 		printf("\tFound line %s\n", strLine.c_str());
@@ -1053,77 +1055,58 @@ bool LoadIPsFromHttp(const CService& addrConnect, const char* pszGet, CNetAddr *
 				
 				printf("\tFound line %s\n", strLine.c_str());
 
-				if (strLine.find("24.") != string::npos)
+				if (strLine.find("|") != string::npos)
 				{
 					strContents = strLine;
+					foundSeeds = true;
+
 					break;
 				}
-                //if (pszKeyword == NULL)
-                //    break;
-                //if (strLine.find(pszKeyword) != string::npos)
-                //{
-                //    strLine = strLine.substr(strLine.find(pszKeyword) + strlen(pszKeyword));
-                //    break;
-                //}
             }
             closesocket(hSocket);
 
-			int seedIndex = 0;
-			*pCount = 0;
-
-			while (true)
+			if (foundSeeds)
 			{
-				int commaIndex = strLine.find(",");
-				int pipeIndex = strLine.find("|");
-				int endIndex = commaIndex > 0 ? commaIndex : pipeIndex;
+				int seedIndex = 0;
+				*pCount = 0;
 
-				if (commaIndex != string::npos || pipeIndex != string::npos)
-					seedIP = strLine.substr(0, endIndex);
-
-
-				printf("\tFound seed %s\n", seedIP.c_str());
-
-				strLine = strLine.substr(strLine.find(",") + 1, strLine.length());
-				CService addr(seedIP,0,true);
-				if (!addr.IsValid() || !addr.IsRoutable())
+				while (true)
 				{
-					printf("Seed not valid %s\n", seedIP.c_str());
-					break;
+					int commaIndex = strLine.find(",");
+					int pipeIndex = strLine.find("|");
+					int endIndex = commaIndex > 0 ? commaIndex : pipeIndex;
+
+					if (commaIndex != string::npos || pipeIndex != string::npos)
+						seedIP = strLine.substr(0, endIndex);
+
+
+					printf("\tFound seed %s\n", seedIP.c_str());
+
+					strLine = strLine.substr(strLine.find(",") + 1, strLine.length());
+					CService addr(seedIP,0,true);
+					if (!addr.IsValid() || !addr.IsRoutable())
+					{
+						printf("Seed not valid %s\n", seedIP.c_str());
+						break;
+					}
+					else
+					{
+						printf("\tGOOD SEED %s    strLine now %s  %d\n", seedIP.c_str(), strLine.c_str(), seedIndex);
+						pSeeds[seedIndex].SetIP(addr);
+						seedIndex++;
+						*pCount = seedIndex;
+					}
+
+
+
+					if (endIndex == pipeIndex)
+						break;
 				}
-				else
-				{
-					printf("\tGOOD SEED %s    strLine now %s  %d\n", seedIP.c_str(), strLine.c_str(), seedIndex);
-					pSeeds[seedIndex].SetIP(addr);
-					seedIndex++;
-					*pCount = seedIndex;
-				}
-
-
-
-				if (endIndex == pipeIndex)
-					break;
 			}
 
-            //while (strLine.size() > 0 && isspace(strLine[strLine.size()-1]))
-            //    strLine.resize(strLine.size()-1);
-            //CService addr(strLine,0,true);
-            //printf("GetMyExternalIP() received [%s] %s\n", strLine.c_str(), addr.ToString().c_str());
-            //if (!addr.IsValid() || !addr.IsRoutable())
-            //    return false;
-            //ipRet.SetIP(addr);
-
-
-            //if (strLine.find("<") != string::npos)
-            //    strLine = strLine.substr(0, strLine.find("<"));
-            //strLine = strLine.substr(strspn(strLine.c_str(), " \t\n\r"));
-            //while (strLine.size() > 0 && isspace(strLine[strLine.size()-1]))
-            //    strLine.resize(strLine.size()-1);
-            //CService addr(strLine,0,true);
-            //printf("GetMyExternalIP() received [%s] %s\n", strLine.c_str(), addr.ToString().c_str());
-            //if (!addr.IsValid() || !addr.IsRoutable())
-            //    return false;
-            //ipRet.SetIP(addr);
-            return true;
+			printf("Done finding seeds.\n");
+            return foundSeeds;
+			//break;
         }
     }
     closesocket(hSocket);
@@ -1158,35 +1141,25 @@ void ThreadDNSAddressSeed2(void* parg)
 
 		LoadIPsFromHttp(addrConnect, pszGet, pSeeds, &seedCount);
 
-        printf("Found %d seeds\n", seedCount);
+		if (seedCount > 0)
+		{
+			printf("Found %d seeds\n", seedCount);
 
-        for (unsigned int seed_idx = 0; seed_idx < seedCount; seed_idx++) {
-
-   //         vector<CNetAddr> vaddr;
-   //         vector<CAddress> vAdd;
-
-			//CNetAddr *ip = pSeeds[seed_idx];
-   //         //BOOST_FOREACH(CNetAddr& ip, vaddr)
-   //         {
-   //             int nOneDay = 24*3600;
-   //             CAddress addr = CAddress(CService(ip, GetDefaultPort()));
-   //             addr.nTime = GetTime() - 3*nOneDay - GetRand(4*nOneDay); // use a random age between 3 and 7 days old
-   //             vAdd.push_back(addr);
-   //             found++;
-   //         }
-
-			CNetAddr *ip = pSeeds + seed_idx;
-			vector<CAddress> vAdd;
-			int nOneDay = 24*3600;
-            CAddress addr = CAddress(CService(ip->ToStringIP(), GetDefaultPort()));
-            addr.nTime = GetTime() - 3*nOneDay - GetRand(4*nOneDay); // use a random age between 3 and 7 days old
-            vAdd.push_back(addr);
+			for (unsigned int seed_idx = 0; seed_idx < seedCount && seed_idx < 100; seed_idx++) {
 
 
-            addrman.Add(vAdd, *ip);
+				CNetAddr *ip = pSeeds + seed_idx;
+				vector<CAddress> vAdd;
+				int nOneDay = 24*3600;
+				CAddress addr = CAddress(CService(ip->ToStringIP(), GetDefaultPort()));
+				addr.nTime = GetTime() - 3*nOneDay - GetRand(4*nOneDay); // use a random age between 3 and 7 days old
+				vAdd.push_back(addr);
 
-        }
 
+				addrman.Add(vAdd, *ip);
+
+			}
+		}
 
         printf("Loading addresses from DNS seeds (could take a while)\n");
 		found = 0;
