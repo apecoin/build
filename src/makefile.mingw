@@ -25,18 +25,18 @@ BOOST_SUFFIX?=-mgw48-mt-sd-1_54
 
 INCLUDEPATHS= \
  -I"$(CURDIR)" \
- -I"c:\somepath\src\leveldb\include" \
- -I"c:\somepath\boost_1_54_0" \
- -I"c:\somepath\db-4.8.30.NC\build_unix" \
- -I"c:\somepath\openssl-1.0.1e\include" \
- -I"c:\somepath\src\leveldb\helpers"
+ -I"M:\cygwin64\home\mod\apecoin\src\leveldb\include" \
+ -I"M:\cygwin64\packages\boost_1_54_0" \
+ -I"M:\cygwin64\packages\db-4.8.30.NC\build_unix" \
+ -I"M:\cygwin64\packages\openssl-1.0.1e\include" \
+ -I"M:\cygwin64\home\mod\apecoin\src\leveldb\helpers"
 
 
 LIBPATHS= \
  -L"$(CURDIR)/leveldb" \
- -L"c:\somepath\boost_1_54_0\stage\lib" \
- -L"c:\somepath\db-4.8.30.NC\build_unix" \
- -L"c:\somepath\openssl-1.0.1e"
+ -L"M:\cygwin64\packages\boost_1_54_0\stage\lib" \
+ -L"M:\cygwin64\packages\db-4.8.30.NC\build_unix" \
+ -L"M:\cygwin64\packages\openssl-1.0.1e"
  
 
 LIBS= \

@@ -12,6 +12,7 @@ windows:BOOST_LIB_SUFFIX = -mgw48-mt-s-1_54
 
 QT += core
 QT += widgets
+QT += webkitwidgets
 
 # UNCOMMENT THIS SECTION TO BUILD ON WINDOWS
 # Change paths if needed, these use the foocoin/deps.git repository locations
@@ -23,13 +24,13 @@ windows:LIBS += -lole32 -loleaut32 -luuid -lgdi32
 LIBS += -lboost_system$$BOOST_LIB_SUFFIX -lboost_filesystem$$BOOST_LIB_SUFFIX -lboost_program_options$$BOOST_LIB_SUFFIX -lboost_thread$$BOOST_LIB_SUFFIX
 macx: LIBS += -framework IOKit
 #BOOST_LIB_SUFFIX=-mgw48-mt-sd-1_54
-windows:BOOST_INCLUDE_PATH=c:/somepath/boost_1_54_0
-windows:BOOST_LIB_PATH=c:/somepath/boost_1_54_0/stage/lib
-windows:BDB_INCLUDE_PATH=c:/somepath/db-4.8.30.NC/build_unix
-windows:BDB_LIB_PATH=c:/somepath/db-4.8.30.NC/build_unix
-windows:OPENSSL_INCLUDE_PATH=c:/somepath/openssl-1.0.1e/include
-windows:OPENSSL_LIB_PATH=c:/somepath/openssl-1.0.1e
-#windows:QT5_LIB_PATH=c:\somepath\Qt\Qt5.1.1\5.1.1\mingw48_32\lib
+windows:BOOST_INCLUDE_PATH=M:/cygwin64/packages/boost_1_54_0
+windows:BOOST_LIB_PATH=M:/cygwin64/packages/boost_1_54_0/stage/lib
+windows:BDB_INCLUDE_PATH=M:/cygwin64/packages/db-4.8.30.NC/build_unix
+windows:BDB_LIB_PATH=M:/cygwin64/packages/db-4.8.30.NC/build_unix
+windows:OPENSSL_INCLUDE_PATH=M:/cygwin64/packages/openssl-1.0.1e/include
+windows:OPENSSL_LIB_PATH=M:/cygwin64/packages/openssl-1.0.1e
+#windows:QT5_LIB_PATH=M:\Qt\Qt5.1.1\5.1.1\mingw48_32\lib
 OBJECTS_DIR = build
 MOC_DIR = build
 UI_DIR = build
@@ -41,8 +42,7 @@ contains(RELEASE, 1) {
     macx:QMAKE_CFLAGS += -mmacosx-version-min=10.5 -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk
     macx:QMAKE_LFLAGS += -mmacosx-version-min=10.5 -arch i386 -isysroot /Developer/SDKs/MacOSX10.5.sdk
 
-    !windows:!macx 
-	{
+    !windows:!macx {
         # Linux: static link
         LIBS += -Wl,-Bstatic
     }
@@ -168,6 +168,7 @@ HEADERS += src/qt/bitcoingui.h \
     src/ui_interface.h \
     src/scrypt.h \
     src/qt/miningpage.h \
+    src/qt/faqpage.h \
     src/version.h \
     src/qt/rpcconsole.h
 
@@ -230,6 +231,7 @@ SOURCES += src/qt/bitcoin.cpp src/qt/bitcoingui.cpp \
     src/qt/rpcconsole.cpp \
     src/scrypt.c \
     src/qt/miningpage.cpp \
+    src/qt/faqpage.cpp \
     src/noui.cpp
 
 RESOURCES += \
@@ -247,7 +249,8 @@ FORMS += \
     src/qt/forms/askpassphrasedialog.ui \
     src/qt/forms/rpcconsole.ui \
     src/qt/forms/miningpage.ui \
-    src/qt/forms/optionsdialog.ui
+    src/qt/forms/faqpage.ui \
+	src/qt/forms/optionsdialog.ui
 
 contains(USE_QRCODE, 1) {
 HEADERS += src/qt/qrcodedialog.h

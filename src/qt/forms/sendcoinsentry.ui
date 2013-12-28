@@ -98,6 +98,23 @@
       </widget>
      </item>
      <item>
+      <widget class="QToolButton" name="donateButton">
+       <property name="toolTip">
+        <string>Send a few APEs to the ApeCoin devs</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../bitcoin.qrc">
+         <normaloff>:/icons/res/icons/donate.png</normaloff>:/icons/res/icons/donate.png</iconset>
+       </property>
+       <property name="shortcut">
+        <string>Alt+A</string>
+       </property>
+      </widget>
+     </item>
+     <item>
       <widget class="QToolButton" name="addressBookButton">
        <property name="toolTip">
         <string>Choose address from address book</string>

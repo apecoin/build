@@ -2,7 +2,7 @@
 #define CLIENTMODEL_H
 
 #include <QObject>
-
+#include "bignum.h"
 class OptionsModel;
 class AddressTableModel;
 class TransactionTableModel;
@@ -51,6 +51,10 @@ public:
 
     int getHashrate() const;
     double GetDifficulty() const;
+    int64 GetCurrentBlockReward() const;
+	int64 GetCurrentTargetTimespan() const;
+	int64 GetCurrentInterval() const;
+	int64 GetCurrentTargetSpacing() const;
 
     QDateTime getLastBlockDate() const;
 
@@ -76,6 +80,7 @@ private:
     int cachedNumBlocks;
     int cachedNumBlocksOfPeers;
     int cachedHashrate;
+    //int cachedCurrentBlockReward;
 
     MiningType miningType;
     int miningThreads;

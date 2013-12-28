@@ -190,6 +190,15 @@
       </widget>
      </item>
      <item>
+      <widget class="QWebView" name="webView">
+       <property name="url">
+        <url>
+         <string>http://www.apecoin.org/client/overview.html</string>
+        </url>
+       </property>
+      </widget>
+     </item>
+     <item>
       <spacer name="verticalSpacer">
        <property name="orientation">
         <enum>Qt::Vertical</enum>
@@ -294,6 +303,13 @@
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QWebView</class>
+   <extends>QWidget</extends>
+   <header>QtWebKitWidgets/QWebView</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

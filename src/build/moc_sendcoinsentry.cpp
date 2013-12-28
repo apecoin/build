@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_SendCoinsEntry_t {
-    QByteArrayData data[14];
-    char stringdata[205];
+    QByteArrayData data[15];
+    char stringdata[229];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -42,13 +42,15 @@ QT_MOC_LITERAL(9, 105, 20),
 QT_MOC_LITERAL(10, 126, 7),
 QT_MOC_LITERAL(11, 134, 28),
 QT_MOC_LITERAL(12, 163, 22),
-QT_MOC_LITERAL(13, 186, 17)
+QT_MOC_LITERAL(13, 186, 23),
+QT_MOC_LITERAL(14, 210, 17)
     },
     "SendCoinsEntry\0removeEntry\0\0SendCoinsEntry*\0"
     "entry\0setRemoveEnabled\0enabled\0clear\0"
     "on_deleteButton_clicked\0on_payTo_textChanged\0"
     "address\0on_addressBookButton_clicked\0"
-    "on_pasteButton_clicked\0updateDisplayUnit\0"
+    "on_pasteButton_clicked\0on_donateButton_clicked\0"
+    "updateDisplayUnit\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -58,7 +60,7 @@ static const uint qt_meta_data_SendCoinsEntry[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+       9,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -66,16 +68,17 @@ static const uint qt_meta_data_SendCoinsEntry[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   54,    2, 0x05,
+       1,    1,   59,    2, 0x05,
 
  // slots: name, argc, parameters, tag, flags
-       5,    1,   57,    2, 0x0a,
-       7,    0,   60,    2, 0x0a,
-       8,    0,   61,    2, 0x08,
-       9,    1,   62,    2, 0x08,
-      11,    0,   65,    2, 0x08,
-      12,    0,   66,    2, 0x08,
-      13,    0,   67,    2, 0x08,
+       5,    1,   62,    2, 0x0a,
+       7,    0,   65,    2, 0x0a,
+       8,    0,   66,    2, 0x08,
+       9,    1,   67,    2, 0x08,
+      11,    0,   70,    2, 0x08,
+      12,    0,   71,    2, 0x08,
+      13,    0,   72,    2, 0x08,
+      14,    0,   73,    2, 0x08,
 
  // signals: parameters
     QMetaType::Void, 0x80000000 | 3,    4,
@@ -85,6 +88,7 @@ static const uint qt_meta_data_SendCoinsEntry[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString,   10,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -104,7 +108,8 @@ void SendCoinsEntry::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 4: _t->on_payTo_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 5: _t->on_addressBookButton_clicked(); break;
         case 6: _t->on_pasteButton_clicked(); break;
-        case 7: _t->updateDisplayUnit(); break;
+        case 7: _t->on_donateButton_clicked(); break;
+        case 8: _t->updateDisplayUnit(); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -155,13 +160,13 @@ int SendCoinsEntry::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 9;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 8)
+        if (_id < 9)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 9;
     }
     return _id;
 }

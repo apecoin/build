@@ -59,6 +59,7 @@ INPUT(
 ./build\rpcconsole.o
 ./build\scrypt.o
 ./build\miningpage.o
+./build\faqpage.o
 ./build\noui.o
 ./build\qrc_bitcoin.o
 ./build\moc_bitcoingui.o
@@ -89,5 +90,6 @@ INPUT(
 ./build\moc_askpassphrasedialog.o
 ./build\moc_notificator.o
 ./build\moc_miningpage.o
+./build\moc_faqpage.o
 ./build\moc_rpcconsole.o
 );

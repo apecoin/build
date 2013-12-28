@@ -163,7 +163,7 @@ int ClientModel::getHashrate() const
     return (boost::int64_t)dHashesPerSec;
 }
 
-// Litecoin: copied from bitcoinrpc.cpp.
+// ApeCoin: copied from bitcoinrpc.cpp.
 double ClientModel::GetDifficulty() const
 {
     // Floating point number that is a multiple of the minimum difficulty,
@@ -190,6 +190,27 @@ double ClientModel::GetDifficulty() const
     return dDiff;
 }
 
+// ApeCoin: copied from bitcoinrpc.cpp.
+int64 ClientModel::GetCurrentBlockReward() const
+{
+    return GetBlockValue(cachedNumBlocks, 0) / COIN;
+}
+
+int64 ClientModel::GetCurrentTargetTimespan() const
+{
+    return getTargetTimespan(cachedNumBlocks);
+}
+
+int64 ClientModel::GetCurrentInterval() const
+{
+    return getInterval(cachedNumBlocks);
+}
+
+int64 ClientModel::GetCurrentTargetSpacing() const
+{
+    return getTargetSpacing(cachedNumBlocks);
+}
+
 QDateTime ClientModel::getLastBlockDate() const
 {
     return QDateTime::fromTime_t(pindexBest->GetBlockTime());
@@ -207,6 +228,8 @@ void ClientModel::updateTimer()
 
     cachedNumBlocks = newNumBlocks;
     cachedNumBlocksOfPeers = newNumBlocksOfPeers;
+
+	//cachedCurrentBlockReward = 1244;
 
     // Only need to update if solo mining. When pool mining, stats are pushed.
     if (miningType == SoloMining)

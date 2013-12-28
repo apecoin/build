@@ -3,7 +3,7 @@
  *
  * W.J. van der Laan 2011-2012
  * The Bitcoin Developers 2011-2012
- * The Litecoin Developers 201-2013
+ * The ApeCoin Developers 201-2013
  */
 #include "bitcoingui.h"
 #include "transactiontablemodel.h"
@@ -21,6 +21,7 @@
 #include "transactionview.h"
 #include "overviewpage.h"
 #include "miningpage.h"
+#include "faqpage.h"
 #include "bitcoinunits.h"
 #include "guiconstants.h"
 #include "askpassphrasedialog.h"
@@ -101,6 +102,7 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     overviewPage = new OverviewPage();
 
     miningPage = new MiningPage(this);
+    faqPage = new FaqPage(this);
 
     transactionsPage = new QWidget(this);
     QVBoxLayout *vbox = new QVBoxLayout();
@@ -119,7 +121,8 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     centralWidget = new QStackedWidget(this);
     centralWidget->addWidget(overviewPage);
     centralWidget->addWidget(miningPage);
-    centralWidget->addWidget(transactionsPage);
+    centralWidget->addWidget(faqPage);
+	centralWidget->addWidget(transactionsPage);
     centralWidget->addWidget(addressBookPage);
     centralWidget->addWidget(receiveCoinsPage);
     centralWidget->addWidget(sendCoinsPage);
@@ -208,6 +211,11 @@ void BitcoinGUI::createActions()
     miningAction->setCheckable(true);
     tabGroup->addAction(miningAction);
 
+    faqAction = new QAction(QIcon(":/icons/faq"), tr("&FAQ"), this);
+    faqAction->setToolTip(tr("View FAQ"));
+    faqAction->setCheckable(true);
+    tabGroup->addAction(faqAction);
+
     historyAction = new QAction(QIcon(":/icons/history"), tr("&Transactions"), this);
     historyAction->setToolTip(tr("Browse transaction history"));
     historyAction->setCheckable(true);
@@ -250,6 +258,7 @@ void BitcoinGUI::createActions()
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(overviewAction, SIGNAL(triggered()), this, SLOT(gotoOverviewPage()));
     connect(miningAction, SIGNAL(triggered()), this, SLOT(gotoMiningPage()));
+    connect(faqAction, SIGNAL(triggered()), this, SLOT(gotoFaqPage()));
     connect(historyAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
     connect(historyAction, SIGNAL(triggered()), this, SLOT(gotoHistoryPage()));
     connect(addressBookAction, SIGNAL(triggered()), this, SLOT(showNormalIfMinimized()));
@@ -349,6 +358,7 @@ void BitcoinGUI::createToolBars()
     toolbar->addAction(historyAction);
     toolbar->addAction(addressBookAction);
     toolbar->addAction(miningAction);
+    toolbar->addAction(faqAction);
 #ifdef FIRST_CLASS_MESSAGING
     toolbar->addAction(firstClassMessagingAction);
 #endif
@@ -419,6 +429,7 @@ void BitcoinGUI::setWalletModel(WalletModel *walletModel)
         sendCoinsPage->setModel(walletModel);
         signVerifyMessageDialog->setModel(walletModel);
         miningPage->setModel(clientModel);
+		faqPage->setModel(clientModel);
 
         setEncryptionStatus(walletModel->getEncryptionStatus());
         connect(walletModel, SIGNAL(encryptionStatusChanged(int)), this, SLOT(setEncryptionStatus(int)));
@@ -562,6 +573,11 @@ void BitcoinGUI::setNumBlocks(int count, int nTotalBlocks)
     }
 
     tooltip = tr("Current difficulty is %1.").arg(clientModel->GetDifficulty()) + QString("<br>") + tooltip;
+
+    tooltip = tr("Current block reward is %1.").arg(clientModel->GetCurrentBlockReward()) + QString("<br>") + tooltip;
+
+    tooltip = tr("Difficulty adjusted every %1 s.").arg(clientModel->GetCurrentTargetTimespan()) + QString("<br>") + tooltip;
+    tooltip = tr("Block generated every %1 s.").arg(clientModel->GetCurrentTargetSpacing()) + QString("<br>") + tooltip;
 
     QDateTime now = QDateTime::currentDateTime();
     QDateTime lastBlockDate = clientModel->getLastBlockDate();
@@ -741,6 +757,15 @@ void BitcoinGUI::gotoMiningPage()
 {
     miningAction->setChecked(true);
     centralWidget->setCurrentWidget(miningPage);
+
+    exportAction->setEnabled(false);
+    disconnect(exportAction, SIGNAL(triggered()), 0, 0);
+}
+
+void BitcoinGUI::gotoFaqPage()
+{
+    faqAction->setChecked(true);
+    centralWidget->setCurrentWidget(faqPage);
 
     exportAction->setEnabled(false);
     disconnect(exportAction, SIGNAL(triggered()), 0, 0);

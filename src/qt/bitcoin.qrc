@@ -43,6 +43,8 @@
         <file alias="filesave">res/icons/filesave.png</file>
         <file alias="qrcode">res/icons/qrcode.png</file>
         <file alias="debugwindow">res/icons/debugwindow.png</file>
+        <file alias="donate">res/icons/donate.png</file>
+        <file alias="faq">res/icons/faq.png</file>
     </qresource>
     <qresource prefix="/images">
         <file alias="about">res/images/about.png</file>
@@ -50,6 +52,7 @@
     </qresource>
     <qresource prefix="/movies">
         <file alias="update_spinner">res/movies/update_spinner.mng</file>
+        <file alias="ape_movie">res/movies/ape_movie.mng</file>
     </qresource>
     <qresource prefix="/translations">
         <file alias="bg">locale/bitcoin_bg.qm</file>

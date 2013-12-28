@@ -10,6 +10,7 @@
 #define UI_OVERVIEWPAGE_H
 
 #include <QtCore/QVariant>
+#include <QtWebKitWidgets/QWebView>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
@@ -45,6 +46,7 @@ public:
     QLabel *labelNumTransactions;
     QLabel *labelImmatureText;
     QLabel *labelImmature;
+    QWebView *webView;
     QSpacerItem *verticalSpacer;
     QVBoxLayout *verticalLayout_3;
     QFrame *frame_2;
@@ -163,6 +165,12 @@ public:
 
 
         verticalLayout_2->addWidget(frame);
+
+        webView = new QWebView(OverviewPage);
+        webView->setObjectName(QStringLiteral("webView"));
+        webView->setUrl(QUrl(QStringLiteral("http://www.apecoin.org/client/overview.html")));
+
+        verticalLayout_2->addWidget(webView);
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 

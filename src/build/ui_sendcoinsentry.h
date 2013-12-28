@@ -36,6 +36,7 @@ public:
     QLabel *label_4;
     QHBoxLayout *payToLayout;
     QValidatedLineEdit *payTo;
+    QToolButton *donateButton;
     QToolButton *addressBookButton;
     QToolButton *pasteButton;
     QToolButton *deleteButton;
@@ -94,27 +95,35 @@ public:
 
         payToLayout->addWidget(payTo);
 
+        donateButton = new QToolButton(SendCoinsEntry);
+        donateButton->setObjectName(QStringLiteral("donateButton"));
+        QIcon icon;
+        icon.addFile(QStringLiteral(":/icons/res/icons/donate.png"), QSize(), QIcon::Normal, QIcon::Off);
+        donateButton->setIcon(icon);
+
+        payToLayout->addWidget(donateButton);
+
         addressBookButton = new QToolButton(SendCoinsEntry);
         addressBookButton->setObjectName(QStringLiteral("addressBookButton"));
-        QIcon icon;
-        icon.addFile(QStringLiteral(":/icons/address-book"), QSize(), QIcon::Normal, QIcon::Off);
-        addressBookButton->setIcon(icon);
+        QIcon icon1;
+        icon1.addFile(QStringLiteral(":/icons/address-book"), QSize(), QIcon::Normal, QIcon::Off);
+        addressBookButton->setIcon(icon1);
 
         payToLayout->addWidget(addressBookButton);
 
         pasteButton = new QToolButton(SendCoinsEntry);
         pasteButton->setObjectName(QStringLiteral("pasteButton"));
-        QIcon icon1;
-        icon1.addFile(QStringLiteral(":/icons/editpaste"), QSize(), QIcon::Normal, QIcon::Off);
-        pasteButton->setIcon(icon1);
+        QIcon icon2;
+        icon2.addFile(QStringLiteral(":/icons/editpaste"), QSize(), QIcon::Normal, QIcon::Off);
+        pasteButton->setIcon(icon2);
 
         payToLayout->addWidget(pasteButton);
 
         deleteButton = new QToolButton(SendCoinsEntry);
         deleteButton->setObjectName(QStringLiteral("deleteButton"));
-        QIcon icon2;
-        icon2.addFile(QStringLiteral(":/icons/remove"), QSize(), QIcon::Normal, QIcon::Off);
-        deleteButton->setIcon(icon2);
+        QIcon icon3;
+        icon3.addFile(QStringLiteral(":/icons/remove"), QSize(), QIcon::Normal, QIcon::Off);
+        deleteButton->setIcon(icon3);
 
         payToLayout->addWidget(deleteButton);
 
@@ -144,6 +153,11 @@ public:
 #ifndef QT_NO_TOOLTIP
         payTo->setToolTip(QApplication::translate("SendCoinsEntry", "The address to send the payment to  (e.g. 1NS17iag9jJgTHD1VXjvLCEnZuQ3rJDE9L)", 0));
 #endif // QT_NO_TOOLTIP
+#ifndef QT_NO_TOOLTIP
+        donateButton->setToolTip(QApplication::translate("SendCoinsEntry", "Send a few APEs to the ApeCoin devs", 0));
+#endif // QT_NO_TOOLTIP
+        donateButton->setText(QString());
+        donateButton->setShortcut(QApplication::translate("SendCoinsEntry", "Alt+A", 0));
 #ifndef QT_NO_TOOLTIP
         addressBookButton->setToolTip(QApplication::translate("SendCoinsEntry", "Choose address from address book", 0));
 #endif // QT_NO_TOOLTIP

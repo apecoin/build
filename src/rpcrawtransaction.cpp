@@ -133,6 +133,7 @@ Value getrawtransaction(const Array& params, bool fHelp)
     ssTx << tx;
     string strHex = HexStr(ssTx.begin(), ssTx.end());
 
+
     if (!fVerbose)
         return strHex;
 

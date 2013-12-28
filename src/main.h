@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
-// Copyright (c) 2011-2012 Litecoin Developers
+// Copyright (c) 2011-2012 ApeCoin Developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 #ifndef BITCOIN_MAIN_H
@@ -45,6 +45,18 @@ inline bool MoneyRange(int64 nValue) { return (nValue >= 0 && nValue <= MAX_MONE
 static const int COINBASE_MATURITY = 15;
 // Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp.
 static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC
+
+static const float APE_PI = 3.14159265359f;
+static const int64 InitialRewardConstant = 10000;
+static const int64 InitialRewardBlockDuration = 30000; //CHANGE OVER AT BLOCK 30,000             //60 * 24 * 30 * 2;
+static const double BlockRewardCyclePeriod = 60 * 24 * 90;
+static const double BlockRewardFrequency = 1 / BlockRewardCyclePeriod;
+static const double BlockRewardDecayFactor = 60 * 24 * 30 * 14.0;
+
+
+extern int64 GetBlockValue(int nHeight, int64 nFees);
+
+
 #ifdef USE_UPNP
 static const int fHaveUPnP = true;
 #else
@@ -115,9 +127,10 @@ bool IsInitialBlockDownload();
 std::string GetWarnings(std::string strFor);
 bool GetTransaction(const uint256 &hash, CTransaction &tx, uint256 &hashBlock);
 
+extern int64 getTargetTimespan(int nHeight);
 
-
-
+extern int64 getInterval(int nHeight);
+extern int64 getTargetSpacing(int nHeight);
 
 
 

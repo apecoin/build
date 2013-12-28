@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_BitcoinGUI_t {
-    QByteArrayData data[46];
-    char stringdata[574];
+    QByteArrayData data[47];
+    char stringdata[586];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -56,25 +56,26 @@ QT_MOC_LITERAL(23, 223, 15),
 QT_MOC_LITERAL(24, 239, 19),
 QT_MOC_LITERAL(25, 259, 20),
 QT_MOC_LITERAL(26, 280, 17),
-QT_MOC_LITERAL(27, 298, 18),
-QT_MOC_LITERAL(28, 317, 4),
-QT_MOC_LITERAL(29, 322, 20),
-QT_MOC_LITERAL(30, 343, 14),
-QT_MOC_LITERAL(31, 358, 12),
-QT_MOC_LITERAL(32, 371, 17),
-QT_MOC_LITERAL(33, 389, 33),
-QT_MOC_LITERAL(34, 423, 6),
-QT_MOC_LITERAL(35, 430, 19),
-QT_MOC_LITERAL(36, 450, 6),
-QT_MOC_LITERAL(37, 457, 5),
-QT_MOC_LITERAL(38, 463, 3),
-QT_MOC_LITERAL(39, 467, 13),
-QT_MOC_LITERAL(40, 481, 12),
-QT_MOC_LITERAL(41, 494, 16),
-QT_MOC_LITERAL(42, 511, 12),
-QT_MOC_LITERAL(43, 524, 21),
-QT_MOC_LITERAL(44, 546, 13),
-QT_MOC_LITERAL(45, 560, 12)
+QT_MOC_LITERAL(27, 298, 11),
+QT_MOC_LITERAL(28, 310, 18),
+QT_MOC_LITERAL(29, 329, 4),
+QT_MOC_LITERAL(30, 334, 20),
+QT_MOC_LITERAL(31, 355, 14),
+QT_MOC_LITERAL(32, 370, 12),
+QT_MOC_LITERAL(33, 383, 17),
+QT_MOC_LITERAL(34, 401, 33),
+QT_MOC_LITERAL(35, 435, 6),
+QT_MOC_LITERAL(36, 442, 19),
+QT_MOC_LITERAL(37, 462, 6),
+QT_MOC_LITERAL(38, 469, 5),
+QT_MOC_LITERAL(39, 475, 3),
+QT_MOC_LITERAL(40, 479, 13),
+QT_MOC_LITERAL(41, 493, 12),
+QT_MOC_LITERAL(42, 506, 16),
+QT_MOC_LITERAL(43, 523, 12),
+QT_MOC_LITERAL(44, 536, 21),
+QT_MOC_LITERAL(45, 558, 13),
+QT_MOC_LITERAL(46, 572, 12)
     },
     "BitcoinGUI\0setNumConnections\0\0count\0"
     "setNumBlocks\0countOfPeers\0setMining\0"
@@ -84,10 +85,10 @@ QT_MOC_LITERAL(45, 560, 12)
     "handleURI\0strURI\0gotoOverviewPage\0"
     "gotoMiningPage\0gotoHistoryPage\0"
     "gotoAddressBookPage\0gotoReceiveCoinsPage\0"
-    "gotoSendCoinsPage\0gotoSignMessageTab\0"
-    "addr\0gotoVerifyMessageTab\0optionsClicked\0"
-    "aboutClicked\0trayIconActivated\0"
-    "QSystemTrayIcon::ActivationReason\0"
+    "gotoSendCoinsPage\0gotoFaqPage\0"
+    "gotoSignMessageTab\0addr\0gotoVerifyMessageTab\0"
+    "optionsClicked\0aboutClicked\0"
+    "trayIconActivated\0QSystemTrayIcon::ActivationReason\0"
     "reason\0incomingTransaction\0parent\0"
     "start\0end\0encryptWallet\0backupWallet\0"
     "changePassphrase\0unlockWallet\0"
@@ -102,7 +103,7 @@ static const uint qt_meta_data_BitcoinGUI[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      28,   14, // methods
+      29,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -110,34 +111,35 @@ static const uint qt_meta_data_BitcoinGUI[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    1,  154,    2, 0x0a,
-       4,    2,  157,    2, 0x0a,
-       6,    2,  162,    2, 0x0a,
-       9,    1,  167,    2, 0x0a,
-      11,    3,  170,    2, 0x0a,
-      15,    2,  177,    2, 0x0a,
-      19,    1,  182,    2, 0x0a,
-      21,    0,  185,    2, 0x08,
-      22,    0,  186,    2, 0x08,
-      23,    0,  187,    2, 0x08,
-      24,    0,  188,    2, 0x08,
-      25,    0,  189,    2, 0x08,
-      26,    0,  190,    2, 0x08,
-      27,    1,  191,    2, 0x08,
-      27,    0,  194,    2, 0x28,
-      29,    1,  195,    2, 0x08,
-      29,    0,  198,    2, 0x28,
-      30,    0,  199,    2, 0x08,
-      31,    0,  200,    2, 0x08,
-      32,    1,  201,    2, 0x08,
-      35,    3,  204,    2, 0x08,
-      39,    1,  211,    2, 0x08,
-      40,    0,  214,    2, 0x08,
-      41,    0,  215,    2, 0x08,
-      42,    0,  216,    2, 0x08,
-      43,    1,  217,    2, 0x08,
-      43,    0,  220,    2, 0x28,
-      45,    0,  221,    2, 0x08,
+       1,    1,  159,    2, 0x0a,
+       4,    2,  162,    2, 0x0a,
+       6,    2,  167,    2, 0x0a,
+       9,    1,  172,    2, 0x0a,
+      11,    3,  175,    2, 0x0a,
+      15,    2,  182,    2, 0x0a,
+      19,    1,  187,    2, 0x0a,
+      21,    0,  190,    2, 0x08,
+      22,    0,  191,    2, 0x08,
+      23,    0,  192,    2, 0x08,
+      24,    0,  193,    2, 0x08,
+      25,    0,  194,    2, 0x08,
+      26,    0,  195,    2, 0x08,
+      27,    0,  196,    2, 0x08,
+      28,    1,  197,    2, 0x08,
+      28,    0,  200,    2, 0x28,
+      30,    1,  201,    2, 0x08,
+      30,    0,  204,    2, 0x28,
+      31,    0,  205,    2, 0x08,
+      32,    0,  206,    2, 0x08,
+      33,    1,  207,    2, 0x08,
+      36,    3,  210,    2, 0x08,
+      40,    1,  217,    2, 0x08,
+      41,    0,  220,    2, 0x08,
+      42,    0,  221,    2, 0x08,
+      43,    0,  222,    2, 0x08,
+      44,    1,  223,    2, 0x08,
+      44,    0,  226,    2, 0x28,
+      46,    0,  227,    2, 0x08,
 
  // slots: parameters
     QMetaType::Void, QMetaType::Int,    3,
@@ -153,19 +155,20 @@ static const uint qt_meta_data_BitcoinGUI[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   28,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   28,
+    QMetaType::Void, QMetaType::QString,   29,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   29,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 33,   34,
-    QMetaType::Void, QMetaType::QModelIndex, QMetaType::Int, QMetaType::Int,   36,   37,   38,
+    QMetaType::Void, 0x80000000 | 34,   35,
+    QMetaType::Void, QMetaType::QModelIndex, QMetaType::Int, QMetaType::Int,   37,   38,   39,
     QMetaType::Void, QMetaType::Bool,   10,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Bool,   44,
+    QMetaType::Void, QMetaType::Bool,   45,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -190,21 +193,22 @@ void BitcoinGUI::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 10: _t->gotoAddressBookPage(); break;
         case 11: _t->gotoReceiveCoinsPage(); break;
         case 12: _t->gotoSendCoinsPage(); break;
-        case 13: _t->gotoSignMessageTab((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 14: _t->gotoSignMessageTab(); break;
-        case 15: _t->gotoVerifyMessageTab((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 16: _t->gotoVerifyMessageTab(); break;
-        case 17: _t->optionsClicked(); break;
-        case 18: _t->aboutClicked(); break;
-        case 19: _t->trayIconActivated((*reinterpret_cast< QSystemTrayIcon::ActivationReason(*)>(_a[1]))); break;
-        case 20: _t->incomingTransaction((*reinterpret_cast< const QModelIndex(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
-        case 21: _t->encryptWallet((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 22: _t->backupWallet(); break;
-        case 23: _t->changePassphrase(); break;
-        case 24: _t->unlockWallet(); break;
-        case 25: _t->showNormalIfMinimized((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 26: _t->showNormalIfMinimized(); break;
-        case 27: _t->toggleHidden(); break;
+        case 13: _t->gotoFaqPage(); break;
+        case 14: _t->gotoSignMessageTab((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 15: _t->gotoSignMessageTab(); break;
+        case 16: _t->gotoVerifyMessageTab((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 17: _t->gotoVerifyMessageTab(); break;
+        case 18: _t->optionsClicked(); break;
+        case 19: _t->aboutClicked(); break;
+        case 20: _t->trayIconActivated((*reinterpret_cast< QSystemTrayIcon::ActivationReason(*)>(_a[1]))); break;
+        case 21: _t->incomingTransaction((*reinterpret_cast< const QModelIndex(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 22: _t->encryptWallet((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 23: _t->backupWallet(); break;
+        case 24: _t->changePassphrase(); break;
+        case 25: _t->unlockWallet(); break;
+        case 26: _t->showNormalIfMinimized((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 27: _t->showNormalIfMinimized(); break;
+        case 28: _t->toggleHidden(); break;
         default: ;
         }
     }
@@ -235,13 +239,13 @@ int BitcoinGUI::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 28)
+        if (_id < 29)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 28;
+        _id -= 29;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 28)
+        if (_id < 29)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 28;
+        _id -= 29;
     }
     return _id;
 }
