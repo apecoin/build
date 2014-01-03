@@ -22,6 +22,7 @@
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
+#include <QtNetwork/QNetworkAccessManager>
 
 QT_BEGIN_NAMESPACE
 
@@ -56,6 +57,9 @@ public:
     QListView *listTransactions;
     QSpacerItem *verticalSpacer_2;
 
+	QLabel *apeMovieLabel;
+	QMovie *apeMovie;
+
     void setupUi(QWidget *OverviewPage)
     {
         if (OverviewPage->objectName().isEmpty())
@@ -63,6 +67,8 @@ public:
         OverviewPage->resize(573, 342);
         horizontalLayout = new QHBoxLayout(OverviewPage);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+
+
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setObjectName(QString::fromUtf8("verticalLayout_2"));
         frame = new QFrame(OverviewPage);
@@ -159,7 +165,20 @@ public:
         formLayout_2->setWidget(2, QFormLayout::FieldRole, labelImmature);
 
 
+		apeLabel = new QLabel(frame);
+		apeLabel->setObjectName(QString::fromUtf8("labelApeMovie"));
+        //apeLabel->setText(QString::fromUtf8("APECOIN!!!!!!!!!!!!!"));
+		apeMovie = new QMovie(":/movies/update_spinner");
+		apeMovie->start();
+		apeLabel->setMovie(movie);
+		formLayout_2->setWidget(4, QFormLayout::FieldRole, apeLabel);
+
         verticalLayout_4->addLayout(formLayout_2);
+
+
+
+
+
 
 
         verticalLayout_2->addWidget(frame);
@@ -257,6 +276,31 @@ public:
         labelTransactionsStatus->setToolTip(QApplication::translate("OverviewPage", "The displayed information may be out of date. Your wallet automatically synchronizes with the ApeCoin network after a connection is established, but this process has not completed yet.", 0));
 #endif // QT_NO_TOOLTIP
     } // retranslateUi
+
+
+
+	void downloadImage()
+	{
+		QNetworkAccessManager *manager = new QNetworkAccessManager();
+		connect(manager, SIGNAL(finished(QNetworkReply*)),this, SLOT(replyFinished(QNetworkReply*)));
+
+		manager->get(QNetworkRequest(QUrl("http://www.apecoin.org/client/resources/overview.mng")));
+	}
+	/*Define  slot and read data from QNetworkreply*/
+	void finished(QNetworkReply* reply)
+	{
+		apeMovie = new QMovie();
+		apeMovie->loadFromData(reply->readAll());
+		apeMovieLabel->setMovie(apeMovie);
+	   ////Check for errors first
+	   //QImage* img2 = new QImage();
+	   //img2->loadFromData(reply->readAll());
+
+	   //if(img2->isNull())
+		  // std::cout << "oops";
+
+	   //img2->save("omg2.png");
+	}
 
 };
 

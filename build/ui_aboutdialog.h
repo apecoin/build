@@ -122,9 +122,8 @@ public:
         AboutDialog->setWindowTitle(QApplication::translate("AboutDialog", "About ApeCoin", 0));
         label->setText(QApplication::translate("AboutDialog", "<b>ApeCoin</b> version", 0));
         label_2->setText(QApplication::translate("AboutDialog", "\n"
-"          Copyright \302\251 2009-2012 Bitcoin Developers\n"
-"          Copyright \302\251 2011-2012 Litecoin Developers\n"
-"          Copyright \302\251 2013 adam m!\n"
+"          Copyright \302\251 2009-2013 Bitcoin Developers\n"
+"          Copyright \302\251 2013-2014 ApeCoin Developers\n"
 "\n"
 "          This is experimental software.\n"
 "\n"
@@ -132,7 +131,7 @@ public:
 "\n"
 "          This product includes software developed by the OpenSSL Project for use in the OpenSSL Toolkit (http://www.openssl.org/) and cryptographic software written by Eric Young (eay@cryptsoft.com) and UPnP software written by Thomas Bernard.\n"
 "\n"
-"          Website: andarazoroflove.org\n"
+"          Website: apecoin.org\n"
 "        ", 0));
     } // retranslateUi
 

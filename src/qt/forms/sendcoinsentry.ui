@@ -107,7 +107,7 @@
        </property>
        <property name="icon">
         <iconset resource="../bitcoin.qrc">
-         <normaloff>:/icons/res/icons/donate.png</normaloff>:/icons/res/icons/donate.png</iconset>
+         <normaloff>:/icons/donate</normaloff>:/icons/donate</iconset>
        </property>
        <property name="shortcut">
         <string>Alt+A</string>

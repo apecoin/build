@@ -851,7 +851,7 @@ int64 GetBlockValue(int nHeight, int64 nFees)
 				* exp(-nBlocksSinceEndOfConstantReward / BlockRewardDecayFactor
 			);
 
-		nSubsidy = (int)dSubsidy;
+		nSubsidy = (int64)(dSubsidy * COIN);
 	}
 
 	// For appearances:

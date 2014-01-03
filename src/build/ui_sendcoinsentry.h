@@ -98,7 +98,7 @@ public:
         donateButton = new QToolButton(SendCoinsEntry);
         donateButton->setObjectName(QStringLiteral("donateButton"));
         QIcon icon;
-        icon.addFile(QStringLiteral(":/icons/res/icons/donate.png"), QSize(), QIcon::Normal, QIcon::Off);
+        icon.addFile(QStringLiteral(":/icons/donate"), QSize(), QIcon::Normal, QIcon::Off);
         donateButton->setIcon(icon);
 
         payToLayout->addWidget(donateButton);
