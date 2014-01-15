@@ -826,11 +826,11 @@ uint256 static GetOrphanRoot(const CBlock* pblock)
 	return pblock->GetHash();
 }
 
+
+
+
 int64 GetBlockValue(int nHeight, int64 nFees)
 {
-	// The reward stays at 10000 APEs per block for 2 months, then starts fluctuating
-	// and decaying, reaching a total coin count of 6,839,998,399  (6.8 GAPEs.)
-
 	int64 nInitialSubsidy = 10000 * COIN;
 
 
@@ -844,14 +844,18 @@ int64 GetBlockValue(int nHeight, int64 nFees)
 	{
 		int64 nBlocksSinceEndOfConstantReward = nHeight - InitialRewardBlockDuration;
 
+
 		double dSubsidy = 
 			(
 			InitialRewardConstant - 
-				InitialRewardConstant / 3 * sin(2 * APE_PI * BlockRewardFrequency * nBlocksSinceEndOfConstantReward))
-				* exp(-nBlocksSinceEndOfConstantReward / BlockRewardDecayFactor
-			);
+				InitialRewardConstant / 3 * sin(2 * APE_PI * BlockRewardFrequency * nBlocksSinceEndOfConstantReward)
+			)
+				* 
+				exp(-nBlocksSinceEndOfConstantReward / BlockRewardDecayFactor)
+				;
 
-		nSubsidy = (int64)(dSubsidy * COIN);
+		nSubsidy = (int64)ceil(dSubsidy * COIN);
+
 	}
 
 	// For appearances:
@@ -1481,7 +1485,13 @@ bool CBlock::ConnectBlock(CTxDB& txdb, CBlockIndex* pindex)
 	}
 
 	if (vtx[0].GetValueOut() > GetBlockValue(pindex->nHeight, nFees))
+	{
+		printf("vtx[0].GetValueOut() > GetBlockValue: %lld <--> %lld", 
+			vtx[0].GetValueOut(),
+			GetBlockValue(pindex->nHeight, nFees)
+			);
 		return false;
+	}
 
 	// Update block index on disk without changing it in memory.
 	// The memory index structure will be changed after the db commits.

@@ -53,6 +53,9 @@ static const double BlockRewardCyclePeriod = 60 * 24 * 90;
 static const double BlockRewardFrequency = 1 / BlockRewardCyclePeriod;
 static const double BlockRewardDecayFactor = 60 * 24 * 30 * 14.0;
 
+//static double *pSinLookupTable = NULL;
+//static double *pExpLookupTable = NULL;
+
 
 extern int64 GetBlockValue(int nHeight, int64 nFees);
 
