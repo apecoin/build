@@ -149,6 +149,34 @@ void OverviewPage::setNumTransactions(int count)
     ui->labelNumTransactions->setText(QLocale::system().toString(count));
 }
 
+
+void OverviewPage::onNetworkReply(QNetworkReply* reply)
+{
+	QString replyString;
+	if(reply->error() == QNetworkReply::NoError)
+	{
+		int httpstatuscode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute ).toUInt();
+		switch(httpstatuscode)
+		{
+		case RESPONSE_OK:
+			if (reply->isReadable()) 
+			{
+				//Assuming this is a human readable file replyString now contains the file
+				replyString = QString::fromUtf8(reply->readAll().data());
+
+				ui->textBrowser->setHtml(replyString);
+			}
+		break;
+		case RESPONSE_ERROR:
+		case RESPONSE_BAD_REQUEST:
+		default:
+		break;
+		}
+	}
+
+
+	reply->deleteLater();
+}
 void OverviewPage::setModel(WalletModel *model)
 {
     this->model = model;
@@ -177,7 +205,16 @@ void OverviewPage::setModel(WalletModel *model)
 
     // update the display unit, to not use the default ("APE")
     updateDisplayUnit();
+
+	//QDesktopServices::openUrl(QUrl("http://www.apecoin.org/client/overviewtext.html"));
+
+	QNetworkAccessManager* mNetworkManager = new QNetworkAccessManager(this);
+	QObject::connect(mNetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onNetworkReply(QNetworkReply*)));
+
+	QUrl url("http://www.apecoin.org/client/overviewtext.html");
+	QNetworkReply* reply = mNetworkManager->get(QNetworkRequest(url));
 }
+
 
 void OverviewPage::updateDisplayUnit()
 {

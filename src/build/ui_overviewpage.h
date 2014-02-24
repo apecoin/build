@@ -10,7 +10,6 @@
 #define UI_OVERVIEWPAGE_H
 
 #include <QtCore/QVariant>
-#include <QtWebKitWidgets/QWebView>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
@@ -21,6 +20,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListView>
 #include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -31,6 +31,17 @@ class Ui_OverviewPage
 public:
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout_2;
+    QLabel *overviewImage;
+    QSpacerItem *verticalSpacer;
+    QTextBrowser *textBrowser;
+    QVBoxLayout *verticalLayout_3;
+    QFrame *frame_2;
+    QVBoxLayout *verticalLayout;
+    QHBoxLayout *horizontalLayout_2;
+    QLabel *label_4;
+    QLabel *labelTransactionsStatus;
+    QSpacerItem *horizontalSpacer;
+    QListView *listTransactions;
     QFrame *frame;
     QVBoxLayout *verticalLayout_4;
     QHBoxLayout *horizontalLayout_4;
@@ -46,28 +57,75 @@ public:
     QLabel *labelNumTransactions;
     QLabel *labelImmatureText;
     QLabel *labelImmature;
-    QWebView *webView;
-    QSpacerItem *verticalSpacer;
-    QVBoxLayout *verticalLayout_3;
-    QFrame *frame_2;
-    QVBoxLayout *verticalLayout;
-    QHBoxLayout *horizontalLayout_2;
-    QLabel *label_4;
-    QLabel *labelTransactionsStatus;
-    QSpacerItem *horizontalSpacer;
-    QListView *listTransactions;
-    QSpacerItem *verticalSpacer_2;
 
     void setupUi(QWidget *OverviewPage)
     {
         if (OverviewPage->objectName().isEmpty())
             OverviewPage->setObjectName(QStringLiteral("OverviewPage"));
-        OverviewPage->resize(573, 342);
+        OverviewPage->resize(634, 594);
         horizontalLayout = new QHBoxLayout(OverviewPage);
         horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
         verticalLayout_2 = new QVBoxLayout();
         verticalLayout_2->setObjectName(QStringLiteral("verticalLayout_2"));
-        frame = new QFrame(OverviewPage);
+        overviewImage = new QLabel(OverviewPage);
+        overviewImage->setObjectName(QStringLiteral("overviewImage"));
+        overviewImage->setPixmap(QPixmap(QString::fromUtf8(":/images/res/images/ape_crouched_370.jpg")));
+
+        verticalLayout_2->addWidget(overviewImage);
+
+        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        verticalLayout_2->addItem(verticalSpacer);
+
+        textBrowser = new QTextBrowser(OverviewPage);
+        textBrowser->setObjectName(QStringLiteral("textBrowser"));
+
+        verticalLayout_2->addWidget(textBrowser);
+
+
+        horizontalLayout->addLayout(verticalLayout_2);
+
+        verticalLayout_3 = new QVBoxLayout();
+        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
+        frame_2 = new QFrame(OverviewPage);
+        frame_2->setObjectName(QStringLiteral("frame_2"));
+        frame_2->setFrameShape(QFrame::StyledPanel);
+        frame_2->setFrameShadow(QFrame::Raised);
+        verticalLayout = new QVBoxLayout(frame_2);
+        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
+        horizontalLayout_2 = new QHBoxLayout();
+        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
+        label_4 = new QLabel(frame_2);
+        label_4->setObjectName(QStringLiteral("label_4"));
+
+        horizontalLayout_2->addWidget(label_4);
+
+        labelTransactionsStatus = new QLabel(frame_2);
+        labelTransactionsStatus->setObjectName(QStringLiteral("labelTransactionsStatus"));
+        labelTransactionsStatus->setStyleSheet(QStringLiteral("QLabel { color: red; }"));
+        labelTransactionsStatus->setText(QStringLiteral("(out of sync)"));
+        labelTransactionsStatus->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
+
+        horizontalLayout_2->addWidget(labelTransactionsStatus);
+
+        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
+
+        horizontalLayout_2->addItem(horizontalSpacer);
+
+
+        verticalLayout->addLayout(horizontalLayout_2);
+
+        listTransactions = new QListView(frame_2);
+        listTransactions->setObjectName(QStringLiteral("listTransactions"));
+        listTransactions->setStyleSheet(QStringLiteral("QListView { background: transparent; }"));
+        listTransactions->setFrameShape(QFrame::NoFrame);
+        listTransactions->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        listTransactions->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+        listTransactions->setSelectionMode(QAbstractItemView::NoSelection);
+
+        verticalLayout->addWidget(listTransactions);
+
+        frame = new QFrame(frame_2);
         frame->setObjectName(QStringLiteral("frame"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
@@ -164,72 +222,14 @@ public:
         verticalLayout_4->addLayout(formLayout_2);
 
 
-        verticalLayout_2->addWidget(frame);
-
-        webView = new QWebView(OverviewPage);
-        webView->setObjectName(QStringLiteral("webView"));
-        webView->setUrl(QUrl(QStringLiteral("http://www.apecoin.org/client/overview.html")));
-
-        verticalLayout_2->addWidget(webView);
-
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_2->addItem(verticalSpacer);
-
-
-        horizontalLayout->addLayout(verticalLayout_2);
-
-        verticalLayout_3 = new QVBoxLayout();
-        verticalLayout_3->setObjectName(QStringLiteral("verticalLayout_3"));
-        frame_2 = new QFrame(OverviewPage);
-        frame_2->setObjectName(QStringLiteral("frame_2"));
-        frame_2->setFrameShape(QFrame::StyledPanel);
-        frame_2->setFrameShadow(QFrame::Raised);
-        verticalLayout = new QVBoxLayout(frame_2);
-        verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        horizontalLayout_2 = new QHBoxLayout();
-        horizontalLayout_2->setObjectName(QStringLiteral("horizontalLayout_2"));
-        label_4 = new QLabel(frame_2);
-        label_4->setObjectName(QStringLiteral("label_4"));
-
-        horizontalLayout_2->addWidget(label_4);
-
-        labelTransactionsStatus = new QLabel(frame_2);
-        labelTransactionsStatus->setObjectName(QStringLiteral("labelTransactionsStatus"));
-        labelTransactionsStatus->setStyleSheet(QStringLiteral("QLabel { color: red; }"));
-        labelTransactionsStatus->setText(QStringLiteral("(out of sync)"));
-        labelTransactionsStatus->setAlignment(Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter);
-
-        horizontalLayout_2->addWidget(labelTransactionsStatus);
-
-        horizontalSpacer = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
-
-        horizontalLayout_2->addItem(horizontalSpacer);
-
-
-        verticalLayout->addLayout(horizontalLayout_2);
-
-        listTransactions = new QListView(frame_2);
-        listTransactions->setObjectName(QStringLiteral("listTransactions"));
-        listTransactions->setStyleSheet(QStringLiteral("QListView { background: transparent; }"));
-        listTransactions->setFrameShape(QFrame::NoFrame);
-        listTransactions->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        listTransactions->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-        listTransactions->setSelectionMode(QAbstractItemView::NoSelection);
-
-        verticalLayout->addWidget(listTransactions);
+        verticalLayout->addWidget(frame);
 
 
         verticalLayout_3->addWidget(frame_2);
 
-        verticalSpacer_2 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_3->addItem(verticalSpacer_2);
-
 
         horizontalLayout->addLayout(verticalLayout_3);
 
-        horizontalLayout->setStretch(0, 1);
         horizontalLayout->setStretch(1, 1);
 
         retranslateUi(OverviewPage);
@@ -240,6 +240,17 @@ public:
     void retranslateUi(QWidget *OverviewPage)
     {
         OverviewPage->setWindowTitle(QApplication::translate("OverviewPage", "Form", 0));
+        overviewImage->setText(QString());
+        textBrowser->setHtml(QApplication::translate("OverviewPage", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"><br /></p>\n"
+"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Visit http://www.apecoin.org for news and updates.<br /><br /></span></p></body></html>", 0));
+        label_4->setText(QApplication::translate("OverviewPage", "<b>Recent transactions</b>", 0));
+#ifndef QT_NO_TOOLTIP
+        labelTransactionsStatus->setToolTip(QApplication::translate("OverviewPage", "The displayed information may be out of date. Your wallet automatically synchronizes with the ApeCoin network after a connection is established, but this process has not completed yet.", 0));
+#endif // QT_NO_TOOLTIP
         label_5->setText(QApplication::translate("OverviewPage", "Wallet", 0));
 #ifndef QT_NO_TOOLTIP
         labelWalletStatus->setToolTip(QApplication::translate("OverviewPage", "The displayed information may be out of date. Your wallet automatically synchronizes with the ApeCoin network after a connection is established, but this process has not completed yet.", 0));
@@ -259,10 +270,6 @@ public:
         labelImmatureText->setText(QApplication::translate("OverviewPage", "Immature:", 0));
 #ifndef QT_NO_TOOLTIP
         labelImmature->setToolTip(QApplication::translate("OverviewPage", "Mined balance that has not yet matured", 0));
-#endif // QT_NO_TOOLTIP
-        label_4->setText(QApplication::translate("OverviewPage", "<b>Recent transactions</b>", 0));
-#ifndef QT_NO_TOOLTIP
-        labelTransactionsStatus->setToolTip(QApplication::translate("OverviewPage", "The displayed information may be out of date. Your wallet automatically synchronizes with the ApeCoin network after a connection is established, but this process has not completed yet.", 0));
 #endif // QT_NO_TOOLTIP
     } // retranslateUi
 

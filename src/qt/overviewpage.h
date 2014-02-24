@@ -2,6 +2,7 @@
 #define OVERVIEWPAGE_H
 
 #include <QWidget>
+#include <QNetworkReply>
 
 QT_BEGIN_NAMESPACE
 class QModelIndex;
@@ -13,6 +14,12 @@ namespace Ui {
 class WalletModel;
 class TxViewDelegate;
 class TransactionFilterProxy;
+
+#define RESPONSE_OK 200
+
+#define RESPONSE_ERROR 401
+	
+#define RESPONSE_BAD_REQUEST 400
 
 /** Overview ("home") page widget */
 class OverviewPage : public QWidget
@@ -46,6 +53,7 @@ private:
 private slots:
     void updateDisplayUnit();
     void handleTransactionClicked(const QModelIndex &index);
+	void onNetworkReply(QNetworkReply* reply);
 };
 
 #endif // OVERVIEWPAGE_H

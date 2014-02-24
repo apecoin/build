@@ -12,7 +12,7 @@ windows:BOOST_LIB_SUFFIX = -mgw48-mt-s-1_54
 
 QT += core
 QT += widgets
-QT += webkitwidgets
+# QT += webkitwidgets
 
 # UNCOMMENT THIS SECTION TO BUILD ON WINDOWS
 # Change paths if needed, these use the foocoin/deps.git repository locations

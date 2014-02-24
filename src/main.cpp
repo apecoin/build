@@ -931,7 +931,10 @@ unsigned int ComputeMinWork(unsigned int nBase, int64 nTime)
 	return bnResult.GetCompact();
 }
 
-unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlock *pblock)
+
+
+
+unsigned int static GetNextWorkRequired_Launch(const CBlockIndex* pindexLast, const CBlock *pblock)
 {
 	unsigned int nProofOfWorkLimit = bnProofOfWorkLimit.GetCompact();
 
@@ -1013,6 +1016,90 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
 	return bnNew.GetCompact();
 }
 
+unsigned int static KimotoGravityWell(const CBlockIndex* pindexLast, const CBlock *pblock, uint64 TargetBlocksSpacingSeconds, uint64 PastBlocksMin, uint64 PastBlocksMax) {
+        /* current difficulty formula, megacoin - kimoto gravity well */
+        const CBlockIndex  *BlockLastSolved                                = pindexLast;
+        const CBlockIndex  *BlockReading                                = pindexLast;
+        const CBlock *BlockCreating                                = pblock;
+                                                BlockCreating                                = BlockCreating;
+        uint64                                PastBlocksMass                                = 0;
+        int64                                PastRateActualSeconds                = 0;
+        int64                                PastRateTargetSeconds                = 0;
+        double                                PastRateAdjustmentRatio                = double(1);
+        CBigNum                                PastDifficultyAverage;
+        CBigNum                                PastDifficultyAveragePrev;
+        double                                EventHorizonDeviation;
+        double                                EventHorizonDeviationFast;
+        double                                EventHorizonDeviationSlow;
+        
+    if (BlockLastSolved == NULL || BlockLastSolved->nHeight == 0 || (uint64)BlockLastSolved->nHeight < PastBlocksMin) { return bnProofOfWorkLimit.GetCompact(); }
+        
+        for (unsigned int i = 1; BlockReading && BlockReading->nHeight > 0; i++) {
+                if (PastBlocksMax > 0 && i > PastBlocksMax) { break; }
+                PastBlocksMass++;
+                
+                if (i == 1)        { PastDifficultyAverage.SetCompact(BlockReading->nBits); }
+                else                { PastDifficultyAverage = ((CBigNum().SetCompact(BlockReading->nBits) - PastDifficultyAveragePrev) / i) + PastDifficultyAveragePrev; }
+                PastDifficultyAveragePrev = PastDifficultyAverage;
+                
+                PastRateActualSeconds                        = BlockLastSolved->GetBlockTime() - BlockReading->GetBlockTime();
+                PastRateTargetSeconds                        = TargetBlocksSpacingSeconds * PastBlocksMass;
+                PastRateAdjustmentRatio                        = double(1);
+                if (PastRateActualSeconds < 0) { PastRateActualSeconds = 0; }
+                if (PastRateActualSeconds != 0 && PastRateTargetSeconds != 0) {
+                PastRateAdjustmentRatio                        = double(PastRateTargetSeconds) / double(PastRateActualSeconds);
+                }
+                EventHorizonDeviation                        = 1 + (0.7084 * pow((double(PastBlocksMass)/double(144)), -1.228));
+                EventHorizonDeviationFast                = EventHorizonDeviation;
+                EventHorizonDeviationSlow                = 1 / EventHorizonDeviation;
+                
+                if (PastBlocksMass >= PastBlocksMin) {
+                        if ((PastRateAdjustmentRatio <= EventHorizonDeviationSlow) || (PastRateAdjustmentRatio >= EventHorizonDeviationFast)) { assert(BlockReading); break; }
+                }
+                if (BlockReading->pprev == NULL) { assert(BlockReading); break; }
+                BlockReading = BlockReading->pprev;
+        }
+        
+        CBigNum bnNew(PastDifficultyAverage);
+        if (PastRateActualSeconds != 0 && PastRateTargetSeconds != 0) {
+                bnNew *= PastRateActualSeconds;
+                bnNew /= PastRateTargetSeconds;
+        }
+    if (bnNew > bnProofOfWorkLimit) { bnNew = bnProofOfWorkLimit; }
+        
+    /// debug print
+    printf("Difficulty Retarget - Kimoto Gravity Well\n");
+    printf("PastRateAdjustmentRatio = %g\n", PastRateAdjustmentRatio);
+    printf("Before: %08x  %s\n", BlockLastSolved->nBits, CBigNum().SetCompact(BlockLastSolved->nBits).getuint256().ToString().c_str());
+    printf("After:  %08x  %s\n", bnNew.GetCompact(), bnNew.getuint256().ToString().c_str());
+        
+        return bnNew.GetCompact();
+}
+
+unsigned int static GetNextWorkRequired_KGW(const CBlockIndex* pindexLast, const CBlock *pblock)
+{
+        static const int64        BlocksTargetSpacing                        = 1 * 60; // 1 Minute
+        unsigned int                TimeDaySeconds                                = 60 * 60 * 24;
+        int64                       PastSecondsMin                                = TimeDaySeconds * 0.01;
+        int64                       PastSecondsMax                                = TimeDaySeconds * 0.14;
+        uint64                      PastBlocksMin                                = PastSecondsMin / BlocksTargetSpacing;
+        uint64                      PastBlocksMax                                = PastSecondsMax / BlocksTargetSpacing;        
+        
+        return KimotoGravityWell(pindexLast, pblock, BlocksTargetSpacing, PastBlocksMin, PastBlocksMax);
+}
+
+unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlock *pblock)
+{
+	if (pindexLast->nHeight+1 < 96440)
+	{
+		return GetNextWorkRequired_Launch(pindexLast, pblock);
+	}
+	else
+	{
+		return GetNextWorkRequired_KGW(pindexLast, pblock);
+	}
+}
+
 bool CheckProofOfWork(uint256 hash, unsigned int nBits)
 {
 	CBigNum bnTarget;
@@ -1037,6 +1124,7 @@ int GetNumBlocksOfPeers()
 
 bool IsInitialBlockDownload()
 {
+	//printf("IsInitialBlockDownload nBestHeight = %d / GetTotalBlocksEstimate() = %d", Checkpoints::GetTotalBlocksEstimate());
 	if (pindexBest == NULL || nBestHeight < Checkpoints::GetTotalBlocksEstimate())
 		return true;
 	static int64 nLastUpdate;
@@ -1046,6 +1134,8 @@ bool IsInitialBlockDownload()
 		pindexLastBest = pindexBest;
 		nLastUpdate = GetTime();
 	}
+	//printf("GetTime() = %d   nLastUpdate = %d   pindexBest->GetBlockTime() = %d, GetTime() - 24 * 60 * 60 = %d", Checkpoints::GetTotalBlocksEstimate(), nLastUpdate, pindexBest->GetBlockTime(), GetTime() - 24 * 60 * 60);
+
 	return (GetTime() - nLastUpdate < 10 &&
 		pindexBest->GetBlockTime() < GetTime() - 24 * 60 * 60);
 }
@@ -2775,6 +2865,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 
 	else if (strCommand == "getblocks")
 	{
+
 		CBlockLocator locator;
 		uint256 hashStop;
 		vRecv >> locator >> hashStop;
@@ -2787,6 +2878,24 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 			pindex = pindex->pnext;
 		int nLimit = 500;
 		printf("getblocks %d to %s limit %d\n", (pindex ? pindex->nHeight : -1), hashStop.ToString().substr(0,20).c_str(), nLimit);
+		
+		printf("NODE = %s\n", pfrom->addrName.c_str() );
+
+
+		//// There seem to be either broken clients (modded?) or a deliberate DDoS coming
+		//// from a small set of IP addresses. This is a hack to block them. Should
+		//// be replaced with something more automated.
+		//if (strcmp(pfrom->addr.ToStringIP().c_str(), "178.210.16.44") == 0
+		//	||
+		//	strcmp(pfrom->addr.ToStringIP().c_str(), "111.206.132.27") == 0
+		//	||
+		//	strcmp(pfrom->addr.ToStringIP().c_str(), "5.141.181.136") == 0)
+		//{
+		//	//printf("BAN THIS IP %S\r\n\r\n\r\n\r\n", "178.210.16.44");
+		//	return false;
+		//}
+
+
 		for (; pindex; pindex = pindex->pnext)
 		{
 			if (pindex->GetBlockHash() == hashStop)
