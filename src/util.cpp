@@ -196,6 +196,8 @@ uint256 GetRandHash()
 
 inline int OutputDebugStringF(const char* pszFormat, ...)
 {
+	cout << pszFormat;
+
     int ret = 0;
     if (fPrintToConsole)
     {

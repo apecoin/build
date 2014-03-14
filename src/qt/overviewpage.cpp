@@ -149,34 +149,68 @@ void OverviewPage::setNumTransactions(int count)
     ui->labelNumTransactions->setText(QLocale::system().toString(count));
 }
 
+//
+//void OverviewPage::onNetworkReply(QNetworkReply* reply)
+//{
+//	QString replyString;
+//	if(reply->error() == QNetworkReply::NoError)
+//	{
+//		int httpstatuscode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute ).toUInt();
+//		switch(httpstatuscode)
+//		{
+//		case RESPONSE_OK:
+//			if (reply->isReadable()) 
+//			{
+//				//Assuming this is a human readable file replyString now contains the file
+//				replyString = QString::fromUtf8(reply->readAll().data());
+//
+//				//ui->textBrowser->setText(replyString);
+//			}
+//		break;
+//		case RESPONSE_ERROR:
+//		case RESPONSE_BAD_REQUEST:
+//		default:
+//		break;
+//		}
+//	}
+//
+//
+//	reply->deleteLater();
+//}
+//
+//void OverviewPage::onImageDownloadFinished(QNetworkReply* reply)
+//{
+//	QString replyString;
+//	if(reply->error() == QNetworkReply::NoError)
+//	{
+//		int httpstatuscode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute ).toUInt();
+//		switch(httpstatuscode)
+//		{
+//		case RESPONSE_OK:
+//			if (reply->isReadable()) 
+//			{
+//				QByteArray jpegData = reply->readAll();
+//				QPixmap pixmap;
+//				pixmap.loadFromData(jpegData);
+//
+//				//QPixmap mypix (":/images/splash");
+//				//ui->overviewImage->setPixmap(mypix);
+//				
+//				ui->overviewImage->setPixmap(pixmap);
+//				printf("Image loaded\n");
+//			}
+//		break;
+//		case RESPONSE_ERROR:
+//		case RESPONSE_BAD_REQUEST:
+//		default:
+//		break;
+//		}
+//	}
+//
+//
+//	reply->deleteLater();
+//}
 
-void OverviewPage::onNetworkReply(QNetworkReply* reply)
-{
-	QString replyString;
-	if(reply->error() == QNetworkReply::NoError)
-	{
-		int httpstatuscode = reply->attribute(QNetworkRequest::HttpStatusCodeAttribute ).toUInt();
-		switch(httpstatuscode)
-		{
-		case RESPONSE_OK:
-			if (reply->isReadable()) 
-			{
-				//Assuming this is a human readable file replyString now contains the file
-				replyString = QString::fromUtf8(reply->readAll().data());
-
-				ui->textBrowser->setHtml(replyString);
-			}
-		break;
-		case RESPONSE_ERROR:
-		case RESPONSE_BAD_REQUEST:
-		default:
-		break;
-		}
-	}
-
-
-	reply->deleteLater();
-}
 void OverviewPage::setModel(WalletModel *model)
 {
     this->model = model;
@@ -198,9 +232,9 @@ void OverviewPage::setModel(WalletModel *model)
         connect(model, SIGNAL(balanceChanged(qint64, qint64, qint64)), this, SLOT(setBalance(qint64, qint64, qint64)));
 
         setNumTransactions(model->getNumTransactions());
-        connect(model, SIGNAL(numTransactionsChanged(int)), this, SLOT(setNumTransactions(int)));
+        //connect(model, SIGNAL(numTransactionsChanged(int)), this, SLOT(setNumTransactions(int)));
 
-        connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
+        //connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
     }
 
     // update the display unit, to not use the default ("APE")
@@ -208,11 +242,21 @@ void OverviewPage::setModel(WalletModel *model)
 
 	//QDesktopServices::openUrl(QUrl("http://www.apecoin.org/client/overviewtext.html"));
 
-	QNetworkAccessManager* mNetworkManager = new QNetworkAccessManager(this);
-	QObject::connect(mNetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onNetworkReply(QNetworkReply*)));
+	//QNetworkAccessManager* mNetworkManager = new QNetworkAccessManager(this);
+	//QObject::connect(mNetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onNetworkReply(QNetworkReply*)));
 
-	QUrl url("http://www.apecoin.org/client/overviewtext.html");
-	QNetworkReply* reply = mNetworkManager->get(QNetworkRequest(url));
+	//QUrl url("http://www.apecoin.org/client/overviewtext.html");
+	//QNetworkReply* reply = mNetworkManager->get(QNetworkRequest(url));
+
+
+
+
+	//QObject::connect(mNetworkManager, SIGNAL(finished(QNetworkReply*)), this, SLOT(onImageDownloadFinished(QNetworkReply*)));
+ 
+	//QUrl urlImage("http://www.apecoin.org/client/resources/ape_crouched_370.jpg");
+	//QNetworkRequest request(urlImage);
+	//mNetworkManager->get(request);
+
 }
 
 

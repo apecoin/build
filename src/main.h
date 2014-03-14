@@ -53,6 +53,8 @@ static const double BlockRewardCyclePeriod = 60 * 24 * 90;
 static const double BlockRewardFrequency = 1 / BlockRewardCyclePeriod;
 static const double BlockRewardDecayFactor = 60 * 24 * 30 * 14.0;
 
+
+
 //static double *pSinLookupTable = NULL;
 //static double *pExpLookupTable = NULL;
 
@@ -138,7 +140,7 @@ extern int64 getTargetSpacing(int nHeight);
 
 
 
-
+unsigned char GetNfactor(int64 nTimestamp);
 
 
 bool GetWalletFile(CWallet* pwallet, std::string &strWalletFileOut);
@@ -827,8 +829,6 @@ public:
 
 
 
-
-
 /** Nodes collect new transactions into a block, hash them into a hash tree,
  * and scan through nonce values to make the block's hash satisfy proof-of-work
  * requirements.  When they solve the proof-of-work, they broadcast the block
@@ -909,7 +909,9 @@ public:
     uint256 GetPoWHash() const
     {
         uint256 thash;
-        scrypt_1024_1_1_256(BEGIN(nVersion), BEGIN(thash));
+
+		scrypt_1024_1_1_256(BEGIN(nVersion), BEGIN(thash));
+
         return thash;
     }
 
@@ -1017,6 +1019,7 @@ public:
             return error("%s() : deserialize or I/O error", __PRETTY_FUNCTION__);
         }
 
+
         // Check the header
         if (!CheckProofOfWork(GetPoWHash(), nBits))
             return error("CBlock::ReadFromDisk() : errors in block header");
@@ -1028,7 +1031,7 @@ public:
 
     void print() const
     {
-        printf("CBlock(hash=%s, PoW=%s, ver=%d, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, nBits=%08x, nNonce=%u, vtx=%d)\n",
+		 printf("CBlock(hash=%s, PoW=%s, ver=%d, hashPrevBlock=%s, hashMerkleRoot=%s, nTime=%u, nBits=%08x, nNonce=%u, vtx=%d)\n",
             GetHash().ToString().substr(0,20).c_str(),
             GetPoWHash().ToString().substr(0,20).c_str(),
             nVersion,

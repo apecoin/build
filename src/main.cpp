@@ -59,7 +59,7 @@ int64 nHPSTimerStart;
 int64 nTransactionFee = 0;
 int64 nMinimumInputValue = CENT / 100;
 
-
+int64 nChainStartTime = 1389306217; // Line: 2815
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -815,8 +815,14 @@ bool CBlock::ReadFromDisk(const CBlockIndex* pindex, bool fReadTransactions)
 		return false;
 	if (GetHash() != pindex->GetBlockHash())
 		return error("CBlock::ReadFromDisk() : GetHash() doesn't match index");
+
+
 	return true;
 }
+
+// increasing Nfactor gradually
+const unsigned char minNfactor = 10;
+const unsigned char maxNfactor = 30;
 
 uint256 static GetOrphanRoot(const CBlock* pblock)
 {
@@ -1954,6 +1960,7 @@ bool CBlock::AcceptBlock()
 	CBlockIndex* pindexPrev = (*mi).second;
 	int nHeight = pindexPrev->nHeight+1;
 
+
 	// Check proof of work
 	if (nBits != GetNextWorkRequired(pindexPrev, this))
 		return DoS(100, error("AcceptBlock() : incorrect proof of work"));
@@ -2036,6 +2043,7 @@ bool ProcessBlock(CNode* pfrom, CBlock* pblock)
 	{
 		printf("ProcessBlock: ORPHAN BLOCK, prev=%s\n", pblock->hashPrevBlock.ToString().substr(0,20).c_str());
 		CBlock* pblock2 = new CBlock(*pblock);
+
 		mapOrphanBlocks.insert(make_pair(hash, pblock2));
 		mapOrphanBlocksByPrev.insert(make_pair(pblock2->hashPrevBlock, pblock2));
 
@@ -2211,7 +2219,9 @@ bool LoadBlockIndex(bool fAllowNew)
 
 			while(true)
 			{
-				scrypt_1024_1_1_256_sp(BEGIN(block.nVersion), BEGIN(thash), scratchpad);
+
+				scrypt_N_1_1_256_sp_generic(BEGIN(block.nVersion), BEGIN(thash), scratchpad, GetNfactor(block.nTime));
+			
 				if (thash <= hashTarget)
 					break;
 				if ((block.nNonce & 0xFFF) == 0)
@@ -3024,6 +3034,7 @@ bool static ProcessMessage(CNode* pfrom, string strCommand, CDataStream& vRecv)
 	else if (strCommand == "block")
 	{
 		CBlock block;
+
 		vRecv >> block;
 
 		printf("received block %s\n", block.GetHash().ToString().substr(0,20).c_str());
@@ -3553,6 +3564,8 @@ CBlock* CreateNewBlock(CReserveKey& reservekey)
 	if (!pblock.get())
 		return NULL;
 
+
+
 	// Create coinbase tx
 	CTransaction txNew;
 	txNew.vin.resize(1);
@@ -3781,11 +3794,17 @@ void FormatHashBuffers(CBlock* pblock, char* pmidstate, char* pdata, char* phash
 
 bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
 {
+	// It's failing to complete this call.
 	uint256 hash = pblock->GetPoWHash();
+
+
 	uint256 hashTarget = CBigNum().SetCompact(pblock->nBits).getuint256();
 
 	if (hash > hashTarget)
+	{
+		printf("CheckWork FAILED\n");
 		return false;
+	}
 
 	//// debug print
 	printf("BitcoinMiner:\n");
@@ -3897,14 +3916,23 @@ void static BitcoinMiner(CWallet *pwallet)
 			//unsigned int nNonceFound;
 
 			uint256 thash;
-			char scratchpad[SCRYPT_SCRATCHPAD_SIZE];
+
+			int scratchpadSize = SCRYPT_SCRATCHPAD_SIZE;
+
+
+			char scratchpad[scratchpadSize];
+
 			while(true)
 			{
+
 				scrypt_1024_1_1_256_sp(BEGIN(pblock->nVersion), BEGIN(thash), scratchpad);
+
 
 				if (thash <= hashTarget)
 				{
 					// Found a solution
+					printf("Miner::Found solution\n");
+
 					SetThreadPriority(THREAD_PRIORITY_NORMAL);
 					CheckWork(pblock.get(), *pwalletMain, reservekey);
 					SetThreadPriority(THREAD_PRIORITY_LOWEST);
@@ -3912,9 +3940,13 @@ void static BitcoinMiner(CWallet *pwallet)
 				}
 				pblock->nNonce += 1;
 				nHashesDone += 1;
+
 				if ((pblock->nNonce & 0xFF) == 0)
+				{
 					break;
+				}
 			}
+
 
 			// Meter hashes/sec
 			static int64 nHashCounter;

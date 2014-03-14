@@ -20,7 +20,6 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QListView>
 #include <QtWidgets/QSpacerItem>
-#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -32,8 +31,6 @@ public:
     QHBoxLayout *horizontalLayout;
     QVBoxLayout *verticalLayout_2;
     QLabel *overviewImage;
-    QSpacerItem *verticalSpacer;
-    QTextBrowser *textBrowser;
     QVBoxLayout *verticalLayout_3;
     QFrame *frame_2;
     QVBoxLayout *verticalLayout;
@@ -72,15 +69,6 @@ public:
         overviewImage->setPixmap(QPixmap(QString::fromUtf8(":/images/res/images/ape_crouched_370.jpg")));
 
         verticalLayout_2->addWidget(overviewImage);
-
-        verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        verticalLayout_2->addItem(verticalSpacer);
-
-        textBrowser = new QTextBrowser(OverviewPage);
-        textBrowser->setObjectName(QStringLiteral("textBrowser"));
-
-        verticalLayout_2->addWidget(textBrowser);
 
 
         horizontalLayout->addLayout(verticalLayout_2);
@@ -241,12 +229,6 @@ public:
     {
         OverviewPage->setWindowTitle(QApplication::translate("OverviewPage", "Form", 0));
         overviewImage->setText(QString());
-        textBrowser->setHtml(QApplication::translate("OverviewPage", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
-"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
-"p, li { white-space: pre-wrap; }\n"
-"</style></head><body style=\" font-family:'MS Shell Dlg 2'; font-size:8.25pt; font-weight:400; font-style:normal;\">\n"
-"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:8pt;\"><br /></p>\n"
-"<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><span style=\" font-size:8pt;\">Visit http://www.apecoin.org for news and updates.<br /><br /></span></p></body></html>", 0));
         label_4->setText(QApplication::translate("OverviewPage", "<b>Recent transactions</b>", 0));
 #ifndef QT_NO_TOOLTIP
         labelTransactionsStatus->setToolTip(QApplication::translate("OverviewPage", "The displayed information may be out of date. Your wallet automatically synchronizes with the ApeCoin network after a connection is established, but this process has not completed yet.", 0));

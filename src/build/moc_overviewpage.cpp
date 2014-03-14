@@ -19,8 +19,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_OverviewPage_t {
-    QByteArrayData data[15];
-    char stringdata[198];
+    QByteArrayData data[12];
+    char stringdata[162];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -40,17 +40,13 @@ QT_MOC_LITERAL(7, 77, 15),
 QT_MOC_LITERAL(8, 93, 18),
 QT_MOC_LITERAL(9, 112, 5),
 QT_MOC_LITERAL(10, 118, 17),
-QT_MOC_LITERAL(11, 136, 24),
-QT_MOC_LITERAL(12, 161, 14),
-QT_MOC_LITERAL(13, 176, 14),
-QT_MOC_LITERAL(14, 191, 5)
+QT_MOC_LITERAL(11, 136, 24)
     },
     "OverviewPage\0transactionClicked\0\0index\0"
     "setBalance\0balance\0unconfirmedBalance\0"
     "immatureBalance\0setNumTransactions\0"
     "count\0updateDisplayUnit\0"
-    "handleTransactionClicked\0onNetworkReply\0"
-    "QNetworkReply*\0reply\0"
+    "handleTransactionClicked\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -60,7 +56,7 @@ static const uint qt_meta_data_OverviewPage[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -68,14 +64,13 @@ static const uint qt_meta_data_OverviewPage[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   44,    2, 0x05,
+       1,    1,   39,    2, 0x05,
 
  // slots: name, argc, parameters, tag, flags
-       4,    3,   47,    2, 0x0a,
-       8,    1,   54,    2, 0x0a,
-      10,    0,   57,    2, 0x08,
-      11,    1,   58,    2, 0x08,
-      12,    1,   61,    2, 0x08,
+       4,    3,   42,    2, 0x0a,
+       8,    1,   49,    2, 0x0a,
+      10,    0,   52,    2, 0x08,
+      11,    1,   53,    2, 0x08,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QModelIndex,    3,
@@ -85,7 +80,6 @@ static const uint qt_meta_data_OverviewPage[] = {
     QMetaType::Void, QMetaType::Int,    9,
     QMetaType::Void,
     QMetaType::Void, QMetaType::QModelIndex,    3,
-    QMetaType::Void, 0x80000000 | 13,   14,
 
        0        // eod
 };
@@ -100,19 +94,7 @@ void OverviewPage::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 2: _t->setNumTransactions((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 3: _t->updateDisplayUnit(); break;
         case 4: _t->handleTransactionClicked((*reinterpret_cast< const QModelIndex(*)>(_a[1]))); break;
-        case 5: _t->onNetworkReply((*reinterpret_cast< QNetworkReply*(*)>(_a[1]))); break;
         default: ;
-        }
-    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        switch (_id) {
-        default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-        case 5:
-            switch (*reinterpret_cast<int*>(_a[1])) {
-            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-            case 0:
-                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QNetworkReply* >(); break;
-            }
-            break;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
@@ -151,13 +133,13 @@ int OverviewPage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
-            qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        if (_id < 5)
+            *reinterpret_cast<int*>(_a[0]) = -1;
+        _id -= 5;
     }
     return _id;
 }

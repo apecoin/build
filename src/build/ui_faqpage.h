@@ -10,12 +10,12 @@
 #define UI_FAQPAGE_H
 
 #include <QtCore/QVariant>
-#include <QtWebKitWidgets/QWebView>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QTextEdit>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -25,9 +25,8 @@ class Ui_FaqPage
 {
 public:
     QGridLayout *gridLayout;
-    QWidget *verticalLayoutWidget;
     QVBoxLayout *verticalLayout;
-    QWebView *webView;
+    QTextEdit *faqTextEdit;
 
     void setupUi(QWidget *FaqPage)
     {
@@ -37,20 +36,15 @@ public:
         gridLayout = new QGridLayout(FaqPage);
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         gridLayout->setSizeConstraint(QLayout::SetMaximumSize);
-        verticalLayoutWidget = new QWidget(FaqPage);
-        verticalLayoutWidget->setObjectName(QStringLiteral("verticalLayoutWidget"));
-        verticalLayoutWidget->setGeometry(QRect(10, 0, 711, 491));
-        verticalLayout = new QVBoxLayout(verticalLayoutWidget);
+        verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QStringLiteral("verticalLayout"));
-        verticalLayout->setContentsMargins(0, 0, 0, 0);
-        webView = new QWebView(verticalLayoutWidget);
-        webView->setObjectName(QStringLiteral("webView"));
-        webView->setUrl(QUrl(QStringLiteral("http://www.apecoin.org/client/faq.html")));
+        faqTextEdit = new QTextEdit(FaqPage);
+        faqTextEdit->setObjectName(QStringLiteral("faqTextEdit"));
 
-        verticalLayout->addWidget(webView);
+        verticalLayout->addWidget(faqTextEdit);
 
 
-        gridLayout->addWidget(verticalLayoutWidget, 1, 1, 1, 1);
+        gridLayout->addLayout(verticalLayout, 1, 1, 1, 1);
 
 
         retranslateUi(FaqPage);

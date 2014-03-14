@@ -5,6 +5,7 @@ INCLUDEPATH += src src/json src/qt
 macx: INCLUDEPATH += ~/Qt/5.1.1/Src/qtbase/include
 DEFINES += QT_GUI BOOST_THREAD_USE_LIB BOOST_SPIRIT_THREADSAFE BOOST_THREAD_PROVIDES_GENERIC_SHARED_MUTEX_ON_WIN __NO_SYSTEM_INCLUDES
 CONFIG += no_include_pwd
+#CONFIG     += debug
 
 macx:BOOST_LIB_SUFFIX = -mt
 windows:BOOST_LIB_SUFFIX = -mgw48-mt-s-1_54
@@ -12,7 +13,8 @@ windows:BOOST_LIB_SUFFIX = -mgw48-mt-s-1_54
 
 QT += core
 QT += widgets
-# QT += webkitwidgets
+#QT += network
+#QT += webkitwidgets
 
 # UNCOMMENT THIS SECTION TO BUILD ON WINDOWS
 # Change paths if needed, these use the foocoin/deps.git repository locations
@@ -67,6 +69,25 @@ contains(USE_QRCODE, 1) {
 #    DEFINES += USE_DBUS
 #    QT += dbus
 #}
+
+# IPv6 currently is not supported
+isEmpty(USE_IPV6) {
+    USE_IPV6=-
+}
+
+
+# use: qmake "USE_IPV6=1" (enabled by default; default)
+#  or: qmake "USE_IPV6=0" (disabled by default)
+#  or: qmake "USE_IPV6=-" (not supported)
+contains(USE_IPV6, -) {
+    message(Building without IPv6 support)
+} else {
+    count(USE_IPV6, 0) {
+        USE_IPV6=1
+    }
+    DEFINES += USE_IPV6=$$USE_IPV6
+}
+
 
 # use: qmake "FIRST_CLASS_MESSAGING=1"
 contains(FIRST_CLASS_MESSAGING, 1) {

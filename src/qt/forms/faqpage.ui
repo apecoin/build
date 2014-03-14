@@ -1,59 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>FaqPage</class>
-  <widget class="QWidget" name="FaqPage">
-    <property name="geometry">
-      <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>729</width>
-        <height>500</height>
-      </rect>
-    </property>
-    <property name="windowTitle">
-      <string>FAQ</string>
-    </property>
-
-    <layout class="QGridLayout" name="gridLayout">
-      <property name="sizeConstraint">
-        <enum>QLayout::SetMaximumSize</enum>
-      </property>
-
-      <item row="1" column="1">
-        <widget class="QWidget" name="verticalLayoutWidget">
-          <property name="geometry">
-            <rect>
-              <x>10</x>
-              <y>0</y>
-              <width>711</width>
-              <height>491</height>
-            </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
-            <item>
-              <widget class="QWebView" name="webView">
-                <property name="url">
-                  <url>
-                    <string>http://www.apecoin.org/client/faq.html</string>
-                  </url>
-                </property>
-              </widget>
-            </item>
-          </layout>
-        </widget>
-      </item>
-
+ <widget class="QWidget" name="FaqPage">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>729</width>
+    <height>500</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>FAQ</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetMaximumSize</enum>
+   </property>
+   <item row="1" column="1">
+    <layout class="QVBoxLayout" name="verticalLayout" stretch="0">
+     <item>
+      <widget class="QTextEdit" name="faqTextEdit"/>
+     </item>
     </layout>
-
-  </widget>
-
- <customwidgets>
-  <customwidget>
-   <class>QWebView</class>
-   <extends>QWidget</extends>
-   <header>QtWebKitWidgets/QWebView</header>
-  </customwidget>
- </customwidgets>
+   </item>
+  </layout>
+ </widget>
  <resources/>
  <connections/>
 </ui>

@@ -2,7 +2,7 @@
 #define OVERVIEWPAGE_H
 
 #include <QWidget>
-#include <QNetworkReply>
+//#include <QNetworkReply>
 
 QT_BEGIN_NAMESPACE
 class QModelIndex;
@@ -53,7 +53,8 @@ private:
 private slots:
     void updateDisplayUnit();
     void handleTransactionClicked(const QModelIndex &index);
-	void onNetworkReply(QNetworkReply* reply);
+	//void onNetworkReply(QNetworkReply* reply);
+	//void onImageDownloadFinished(QNetworkReply* reply);
 };
 
 #endif // OVERVIEWPAGE_H

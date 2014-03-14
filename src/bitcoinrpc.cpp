@@ -2888,7 +2888,7 @@ void ThreadRPCServer2(void* parg)
 
     // Try a dual IPv6/IPv4 socket, falling back to separate IPv4 and IPv6 sockets
     const bool loopback = !mapArgs.count("-rpcallowip");
-    asio::ip::address bindAddress = loopback ? asio::ip::address_v6::loopback() : asio::ip::address_v6::any();
+    asio::ip::address bindAddress = loopback ? asio::ip::address_v4::loopback() : asio::ip::address_v4::any();
     ip::tcp::endpoint endpoint(bindAddress, GetArg("-rpcport", 55883));
 
     boost::signals2::signal<void ()> StopRequests;
@@ -2900,8 +2900,8 @@ void ThreadRPCServer2(void* parg)
         acceptor->set_option(boost::asio::ip::tcp::acceptor::reuse_address(true));
 
         // Try making the socket dual IPv6/IPv4 (if listening on the "any" address)
-        boost::system::error_code v6_only_error;
-        acceptor->set_option(boost::asio::ip::v6_only(loopback), v6_only_error);
+        //boost::system::error_code v6_only_error;
+        //acceptor->set_option(boost::asio::ip::v6_only(loopback), v6_only_error);
 
         acceptor->bind(endpoint);
         acceptor->listen(socket_base::max_connections);
@@ -2913,7 +2913,7 @@ void ThreadRPCServer2(void* parg)
                 .track(acceptor));
 
         // If dual IPv6/IPv4 failed (or we're opening loopback interfaces only), open IPv4 separately
-        if (loopback || v6_only_error)
+        if (loopback)// || v6_only_error)
         {
             bindAddress = loopback ? asio::ip::address_v4::loopback() : asio::ip::address_v4::any();
             endpoint.address(bindAddress);
@@ -2933,7 +2933,7 @@ void ThreadRPCServer2(void* parg)
     }
     catch(boost::system::system_error &e)
     {
-        uiInterface.ThreadSafeMessageBox(strprintf(_("An error occured while setting up the RPC port %i for listening: %s"), endpoint.port(), e.what()),
+        uiInterface.ThreadSafeMessageBox(strprintf(_("An error occurred while setting up the RPC port %i for listening: %s"), endpoint.port(), e.what()),
                              _("Error"), CClientUIInterface::OK | CClientUIInterface::MODAL);
         StartShutdown();
         return;

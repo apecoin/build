@@ -74,6 +74,7 @@ BitcoinGUI::BitcoinGUI(QWidget *parent):
     notificator(0),
     rpcConsole(0)
 {
+	printf("BitcoinGUI: 0");
     resize(850, 650);
     setWindowTitle(tr("ApeCoin") + " - " + tr("Wallet"));
 #ifndef Q_WS_MAC

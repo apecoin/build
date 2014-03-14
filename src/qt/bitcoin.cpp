@@ -118,8 +118,6 @@ static void handleRunawayException(std::exception *e)
 #ifndef BITCOIN_QT_TEST
 int main(int argc, char *argv[])
 {
-    fprintf(stderr, "bitcoin.cpp main() - TOP %d %s\n", 0);
-
 	// TODO: implement URI support on the Mac.
 #if !defined(MAC_OSX)
     // Do this early as we don't want to bother initializing if we are just calling IPC
@@ -150,11 +148,10 @@ int main(int argc, char *argv[])
     }
 #endif
 
-#if QT_VERSION < 0x050000
     // Internal string conversion is all UTF-8
-    QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForTr());
-#endif
+    //QTextCodec::setCodecForTr(QTextCodec::codecForName("UTF-8"));
+    //QTextCodec::setCodecForCStrings(QTextCodec::codecForTr());
+
 
     Q_INIT_RESOURCE(bitcoin);
     QApplication app(argc, argv);
